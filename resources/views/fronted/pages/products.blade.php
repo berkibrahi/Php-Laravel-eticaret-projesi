@@ -87,9 +87,15 @@
           <div class="border p-4 rounded mb-4">
             <h3 class="mb-3 h6 text-uppercase text-black d-block">Kategoriler</h3>
             <ul class="list-unstyled mb-0">
-              <li class="mb-1"><a href="#" class="d-flex"><span>Erkek</span> <span class="text-black ml-auto">(2,220)</span></a></li>
-              <li class="mb-1"><a href="#" class="d-flex"><span>Kadın</span> <span class="text-black ml-auto">(2,550)</span></a></li>
-              <li class="mb-1"><a href="#" class="d-flex"><span>Çocuk</span> <span class="text-black ml-auto">(2,124)</span></a></li>
+                @if (!empty($categories) && $categories->count() > 0)
+                @foreach ($categories as $category)
+
+
+                <li class="mb-1"><a href="#" class="d-flex"><span>{{ $category->name }}</span> <span class="text-black ml-auto">({{ $category->items_count }})</span></a></li>
+
+                @endforeach
+            @endif
+
             </ul>
           </div>
 
@@ -102,19 +108,28 @@
 
             <div class="mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Beden</h3>
+              @if (!empty($sizeLists))
+              @foreach ($sizeLists as $sizeList)
               <label for="s_sm" class="d-flex">
-                <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">S (2,319)</span>
+                <input type="checkbox" id="s_sm" class="mr-2 mt-1"> <span class="text-black">{{$sizeList  }} (2,319)</span>
               </label>
-              <label for="s_md" class="d-flex">
-                <input type="checkbox" id="s_md" class="mr-2 mt-1"> <span class="text-black">M (1,282)</span>
-              </label>
-              <label for="s_lg" class="d-flex">
-                <input type="checkbox" id="s_lg" class="mr-2 mt-1"> <span class="text-black">L (1,392)</span>
-              </label>
+              @endforeach
+
+              @endif
+
+
             </div>
 
             <div class="mb-4">
               <h3 class="mb-3 h6 text-uppercase text-black d-block">Renk</h3>
+              @if (!empty($colors))
+              @foreach ($colors as $color)
+              <a href="#" class="d-flex color-item align-items-center" >
+                <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">{{ $color }} (2,429)</span>
+              </a>
+              @endforeach
+
+              @endif
               <a href="#" class="d-flex color-item align-items-center" >
                 <span class="bg-danger color d-inline-block rounded-circle mr-2"></span> <span class="text-black">Kırmızı (2,429)</span>
               </a>
@@ -183,4 +198,10 @@
 
     </div>
   </div>
+@endsection
+@section("customjs")
+<script>
+    var min_price="{{ $minPrice }}"
+    var max_price="{{ $maxPrice }}"
+</script>
 @endsection
